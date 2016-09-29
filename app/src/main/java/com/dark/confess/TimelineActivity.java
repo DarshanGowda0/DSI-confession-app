@@ -44,7 +44,7 @@ public class TimelineActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
 
 
-//                fireBaseHelper.writeNewPost(Constants.getImei(), "darshan", "This is a testing confession");
+//                fireBaseHelper.writeNewPost(Constants.getImei(TimelineActivity.this), "darshan", "This is a testing confession");
 
 
             }
