@@ -19,5 +19,14 @@ public class Constants {
 
     }
 
+    public static String getCurrentTime() {
+
+
+        //TO get the current time stamp in proper displayable format
+        return "12 am";
+    }
 
 }
+
+
+//// TODO: add hashTags parsing functions and pass it to writePost function
