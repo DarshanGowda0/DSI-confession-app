@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "358820028624",
+    "firebase_url": "https://confessions-app-148c1.firebaseio.com",
+    "project_id": "confessions-app-148c1",
+    "storage_bucket": "confessions-app-148c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358820028624:android:d5c484c806e83ab7",
+        "android_client_info": {
+          "package_name": "com.dark.confess"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358820028624-6dh1si2p4h8rpkqvv3f77n1n6383gdeb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfBQCb7txYllIjWY3608pRPr-FLFVl3AU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

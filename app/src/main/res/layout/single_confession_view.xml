@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="@dimen/cardview_default_radius"
+    app:cardElevation="@dimen/cardview_default_elevation">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/nameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Name"
+            android:textColor="@color/cyan_900" />
+
+        <TextView
+            android:id="@+id/contentTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameTv"
+            android:layout_margin="4dp"
+            android:text="sjhgfkjwegjeg gfjherf/nghfgwgfug\n gjegfuygdfewyufgu" />
+
+        <TextView
+            android:id="@+id/timeStamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/contentTV"
+            android:layout_margin="4dp"
+            android:text="12 pm 2016" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/timeStamp"
+            android:layout_margin="8dp"
+            android:background="@color/cyan_900" />
+
+        <ImageView
+            android:id="@+id/likesIv"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_below="@+id/view"
+            android:src="@android:drawable/btn_minus" />
+
+        <TextView
+            android:id="@+id/likesTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view"
+            android:layout_toRightOf="@+id/likesIv"
+            android:text="23" />
+
+        <ImageView
+            android:id="@+id/repliesIv"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_below="@+id/view"
+            android:layout_toRightOf="@+id/likesTv"
+            android:src="@android:drawable/btn_minus" />
+
+        <TextView
+            android:id="@+id/repliesTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view"
+            android:layout_toRightOf="@+id/repliesIv"
+            android:text="23" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
