@@ -24,7 +24,7 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     CustomAdapter customAdapter;
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    FireBaseHelper fireBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,20 @@ public class TimelineActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        fireBaseHelper = new FireBaseHelper(databaseReference);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+
+//                fireBaseHelper.writeNewPost(Constants.getImei(), "darshan", "This is a testing confession");
+
+
             }
         });
 
@@ -127,4 +135,6 @@ public class TimelineActivity extends AppCompatActivity {
         }
 
     }
+
+
 }
