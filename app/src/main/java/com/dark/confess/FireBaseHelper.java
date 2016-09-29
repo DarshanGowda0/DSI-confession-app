@@ -1,7 +1,10 @@
 package com.dark.confess;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,6 +62,26 @@ public class FireBaseHelper {
 
     }
 
+    public void deletePost(String postId, String uid, final DeleteCallBack deletePostCallBack) {
+
+        databaseReference.child(Constants.POSTS).child(postId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                deletePostCallBack.onDeleted(true);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                deletePostCallBack.onDeleted(false);
+            }
+        });
+
+        //no call back for this
+        databaseReference.child(Constants.USER_POSTS).child(uid).child(postId).removeValue();
+
+    }
+
+    //same function without callback
     public void deletePost(String postId, String uid) {
 
         databaseReference.child(Constants.POSTS).child(postId).removeValue();
@@ -66,8 +89,24 @@ public class FireBaseHelper {
 
     }
 
-    public void deleteReply(String postId, String replyId, String uid) {
 
+    public void deleteReply(String postId, String replyId, String uid, final DeleteCallBack deleteCallBack) {
+
+        databaseReference.child(Constants.REPLIES).child(postId).child(replyId).removeValue().addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                deleteCallBack.onDeleted(false);
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                deleteCallBack.onDeleted(true);
+            }
+        });
+    }
+
+    //delete reply/comment without callback
+    public void deleteReply(String postId, String replyId, String uid) {
         databaseReference.child(Constants.REPLIES).child(postId).child(replyId).removeValue();
     }
 
@@ -192,5 +231,10 @@ public class FireBaseHelper {
     public interface RepliesFetched {
         void onRepliesFetched(ArrayList<Reply> list);
     }
+
+    public interface DeleteCallBack {
+        void onDeleted(boolean var);
+    }
+
 
 }
