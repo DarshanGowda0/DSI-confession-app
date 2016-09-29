@@ -32,4 +32,7 @@ public class Constants {
 
 
 //// TODO: add hashTags parsing functions and pass it to writePost function
-// TODO: add a function to calculate the time difference before showing in the rec view 
+
+// TODO: add a function to calculate the time difference before showing in the rec view
+
+// TODO: add a permission seeking to read the phone state

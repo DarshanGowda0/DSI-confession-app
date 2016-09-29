@@ -62,6 +62,7 @@ public class FireBaseHelper {
     public void deletePost(String postId, String uid) {
 
         databaseReference.child(Constants.POSTS).child(postId).removeValue();
+        databaseReference.child(Constants.USER_POSTS).child(uid).child(postId).removeValue();
 
     }
 
@@ -110,7 +111,7 @@ public class FireBaseHelper {
 
     //fetch posts,fetch comments
 
-    public ArrayList<Post> fetchPosts() {
+    public ArrayList<Post> fetchPosts(final PostsFetched postsFetched) {
 
         final ArrayList<Post> postArrayList = new ArrayList<>();
 
@@ -119,9 +120,24 @@ public class FireBaseHelper {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
-                    Post post = postSnapShot.getValue(Post.class);
+
+                    Log.d(TAG, "onDataChange: " + postSnapShot);
+//                    Post post = postSnapShot.getValue(Post.class);
+                    Post post = new Post();
+
+                    post.uid = postSnapShot.child("uid").getValue(String.class);
+                    post.body = postSnapShot.child("body").getValue(String.class);
+                    post.starCount = postSnapShot.child("starCount").getValue(Integer.class);
+                    post.timeStamp = postSnapShot.child("time").getValue(String.class);
+                    post.author = postSnapShot.child("author").getValue(String.class);
+
                     postArrayList.add(post);
+
                 }
+
+                //callback to notify that the data is fetched
+                postsFetched.onPostsFetched(postArrayList);
+
             }
 
             @Override
@@ -135,7 +151,7 @@ public class FireBaseHelper {
     }
 
 
-    public ArrayList<Reply> fetchComments(String postID) {
+    public ArrayList<Reply> fetchComments(String postID, final RepliesFetched repliesFetched) {
 
         final ArrayList<Reply> replyArrayList = new ArrayList<>();
 
@@ -144,9 +160,18 @@ public class FireBaseHelper {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot replySnapShot : dataSnapshot.getChildren()) {
-                    Reply reply = replySnapShot.getValue(Reply.class);
+//                    Reply reply = replySnapShot.getValue(Reply.class);
+
+                    Reply reply = new Reply();
+                    reply.uid = replySnapShot.child("uid").getValue(String.class);
+                    reply.replyValue = replySnapShot.child("replyValue").getValue(String.class);
+                    reply.timeStamp = replySnapShot.child("time").getValue(String.class);
+                    reply.name = replySnapShot.child("name").getValue(String.class);
+
                     replyArrayList.add(reply);
                 }
+
+                repliesFetched.onRepliesFetched(replyArrayList);
 
             }
 
@@ -158,6 +183,14 @@ public class FireBaseHelper {
 
         return replyArrayList;
 
+    }
+
+    public interface PostsFetched {
+        void onPostsFetched(ArrayList<Post> list);
+    }
+
+    public interface RepliesFetched {
+        void onRepliesFetched(ArrayList<Reply> list);
     }
 
 }
