@@ -1,5 +1,6 @@
 package com.dark.confess;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -92,7 +93,8 @@ public class TimelineActivity extends AppCompatActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    databaseReference.child("test").setValue(position);
+                    Intent intent = new Intent(TimelineActivity.this, CommentsActivity.class);
+                    startActivity(intent);
                 }
             });
 
