@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,8 +18,6 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 
 public class TimelineActivity extends AppCompatActivity {
 
@@ -92,6 +89,8 @@ public class TimelineActivity extends AppCompatActivity {
                 });
 
                 */
+
+                fireBaseHelper.likeOrUnlikePost("-KSrJppgXZiTZeV2oJzQ", Constants.getImei(TimelineActivity.this));
 
 
             }

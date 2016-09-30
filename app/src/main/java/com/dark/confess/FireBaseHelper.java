@@ -117,23 +117,34 @@ public class FireBaseHelper {
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                Post p = mutableData.getValue(Post.class);
-                if (p == null) {
+//                Post p = mutableData.getValue(Post.class);
+                Post post = new Post();
+                post.uid = mutableData.child("uid").getValue(String.class);
+                post.body = mutableData.child("body").getValue(String.class);
+                post.starCount = mutableData.child("starCount").getValue(Integer.class);
+                post.timeStamp = mutableData.child("time").getValue(String.class);
+                post.author = mutableData.child("author").getValue(String.class);
+                post.stars = mutableData.child("stars").getValue(Map.class);
+                if (post == null) {
                     return Transaction.success(mutableData);
                 }
 
-                if (p.stars.containsKey(uid)) {
+                if (post.stars.containsKey(uid)) {
                     // Unstar the post and remove self from stars
-                    p.starCount = p.starCount - 1;
-                    p.stars.remove(uid);
+                    post.starCount = post.starCount - 1;
+                    post.stars.remove(uid);
                 } else {
                     // Star the post and add self to stars
-                    p.starCount = p.starCount + 1;
-                    p.stars.put(uid, true);
+                    post.starCount = post.starCount + 1;
+                    post.stars.put(uid, true);
                 }
 
                 // Set value and report transaction success
-                mutableData.setValue(p);
+//                mutableData.setValue(post);
+
+                mutableData.child("starCount").setValue(post.starCount);
+                mutableData.child("stars").setValue(post.stars);
+
                 return Transaction.success(mutableData);
             }
 
