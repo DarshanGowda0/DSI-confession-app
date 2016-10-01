@@ -45,6 +45,7 @@ public class FireBaseHelper {
         childUpdates.put("/" + Constants.USER_POSTS + "/" + userId + "/" + key, postValues);
 
         databaseReference.updateChildren(childUpdates);
+
     }
 
     //comment is reply
@@ -117,14 +118,7 @@ public class FireBaseHelper {
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-//                Post p = mutableData.getValue(Post.class);
-                Post post = new Post();
-                post.uid = mutableData.child("uid").getValue(String.class);
-                post.body = mutableData.child("body").getValue(String.class);
-                post.starCount = mutableData.child("starCount").getValue(Integer.class);
-                post.timeStamp = mutableData.child("time").getValue(String.class);
-                post.author = mutableData.child("author").getValue(String.class);
-                post.stars = mutableData.child("stars").getValue(Map.class);
+                Post post = mutableData.getValue(Post.class);
                 if (post == null) {
                     return Transaction.success(mutableData);
                 }
@@ -140,11 +134,7 @@ public class FireBaseHelper {
                 }
 
                 // Set value and report transaction success
-//                mutableData.setValue(post);
-
-                mutableData.child("starCount").setValue(post.starCount);
-                mutableData.child("stars").setValue(post.stars);
-
+                mutableData.setValue(post);
                 return Transaction.success(mutableData);
             }
 
@@ -172,14 +162,8 @@ public class FireBaseHelper {
                 for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
 
                     Log.d(TAG, "onDataChange: " + postSnapShot);
-//                    Post post = postSnapShot.getValue(Post.class);
-                    Post post = new Post();
+                    Post post = postSnapShot.getValue(Post.class);
 
-                    post.uid = postSnapShot.child("uid").getValue(String.class);
-                    post.body = postSnapShot.child("body").getValue(String.class);
-                    post.starCount = postSnapShot.child("starCount").getValue(Integer.class);
-                    post.timeStamp = postSnapShot.child("time").getValue(String.class);
-                    post.author = postSnapShot.child("author").getValue(String.class);
 
                     postArrayList.add(post);
 
@@ -210,13 +194,13 @@ public class FireBaseHelper {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot replySnapShot : dataSnapshot.getChildren()) {
-//                    Reply reply = replySnapShot.getValue(Reply.class);
+                    Reply reply = replySnapShot.getValue(Reply.class);
 
-                    Reply reply = new Reply();
-                    reply.uid = replySnapShot.child("uid").getValue(String.class);
-                    reply.replyValue = replySnapShot.child("replyValue").getValue(String.class);
-                    reply.timeStamp = replySnapShot.child("time").getValue(String.class);
-                    reply.name = replySnapShot.child("name").getValue(String.class);
+//                    Reply reply = new Reply();
+//                    reply.uid = replySnapShot.child("uid").getValue(String.class);
+//                    reply.replyValue = replySnapShot.child("replyValue").getValue(String.class);
+//                    reply.timeStamp = replySnapShot.child("time").getValue(String.class);
+//                    reply.name = replySnapShot.child("name").getValue(String.class);
 
                     replyArrayList.add(reply);
                 }

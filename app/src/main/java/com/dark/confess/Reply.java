@@ -31,9 +31,24 @@ public class Reply {
         hashMap.put("uid", uid);
         hashMap.put("name", name);
         hashMap.put("replyValue", replyValue);
-        hashMap.put("time", timeStamp);
+        hashMap.put("timeStamp", timeStamp);
 
         return hashMap;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public String getReplyValue() {
+        return replyValue;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
 }

@@ -12,7 +12,7 @@ import java.util.Map;
 public class Post {
 
     String uid;
-    String timeStamp;
+    String time;
     String author;
     String body;
     int starCount = 0;
@@ -22,11 +22,11 @@ public class Post {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public Post(String uid, String author, String body, String timeStamp) {
+    public Post(String uid, String author, String body, String time) {
         this.uid = uid;
         this.author = author;
         this.body = body;
-        this.timeStamp = timeStamp;
+        this.time = time;
     }
 
     @Exclude
@@ -37,8 +37,31 @@ public class Post {
         result.put("body", body);
         result.put("starCount", starCount);
         result.put("stars", stars);
-        result.put("time", timeStamp);
+        result.put("time", time);
         return result;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public int getStarCount() {
+        return starCount;
+    }
+
+    public Map<String, Boolean> getStars() {
+        return stars;
+    }
 }
