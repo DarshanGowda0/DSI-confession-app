@@ -32,9 +32,6 @@ public class FireBaseHelper {
 
     public void writeNewPost(String userId, String username, String body) {
 
-
-        // Create new post at /user-posts/$userid/$postid and at
-        // /posts/$postid simultaneously
         String key = databaseReference.child(Constants.POSTS).push().getKey();
 
         Post post = new Post(userId, username, body, Constants.getCurrentTime());
@@ -195,13 +192,6 @@ public class FireBaseHelper {
 
                 for (DataSnapshot replySnapShot : dataSnapshot.getChildren()) {
                     Reply reply = replySnapShot.getValue(Reply.class);
-
-//                    Reply reply = new Reply();
-//                    reply.uid = replySnapShot.child("uid").getValue(String.class);
-//                    reply.replyValue = replySnapShot.child("replyValue").getValue(String.class);
-//                    reply.timeStamp = replySnapShot.child("time").getValue(String.class);
-//                    reply.name = replySnapShot.child("name").getValue(String.class);
-
                     replyArrayList.add(reply);
                 }
 

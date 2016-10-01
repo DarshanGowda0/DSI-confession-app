@@ -16,6 +16,7 @@ public class Post {
     String author;
     String body;
     int starCount = 0;
+    int replyCount = 0;
     Map<String, Boolean> stars = new HashMap<>();
 
     public Post() {
@@ -36,6 +37,7 @@ public class Post {
         result.put("author", author);
         result.put("body", body);
         result.put("starCount", starCount);
+        result.put("replyCount", replyCount);
         result.put("stars", stars);
         result.put("time", time);
         return result;
@@ -63,5 +65,9 @@ public class Post {
 
     public Map<String, Boolean> getStars() {
         return stars;
+    }
+
+    public int getReplyCount() {
+        return replyCount;
     }
 }

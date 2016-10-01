@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +27,7 @@ public class TimelineActivity extends AppCompatActivity {
     CustomAdapter customAdapter;
 
     FireBaseHelper fireBaseHelper;
+    ArrayList<Post> postArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,54 +45,6 @@ public class TimelineActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
-//                fireBaseHelper.writeNewPost(Constants.getImei(TimelineActivity.this), "darshan", "This is a testing confession");
-
-//                fireBaseHelper.writeReply("-KSyq654Q_ZfEGtIGqKX",Constants.getImei(TimelineActivity.this),"Darshan N","This is a test comment");
-//                fireBaseHelper.writeReply("-KSyq654Q_ZfEGtIGqKX",Constants.getImei(TimelineActivity.this),"Darshan N","This is a test comment");
-//                fireBaseHelper.writeReply("-KSyq654Q_ZfEGtIGqKX",Constants.getImei(TimelineActivity.this),"Darshan N","This is a test comment");
-
-//                fireBaseHelper.deleteReply("-KSrE9KBaiu4f_l4CuCt", "-KSrEoUxzjo5ay7NrXbZ", Constants.getImei(TimelineActivity.this));
-
-//                fireBaseHelper.deletePost("-KSrE9KBaiu4f_l4CuCt", Constants.getImei(TimelineActivity.this));
-
-
-
-//
-                /*fireBaseHelper.fetchPosts(new FireBaseHelper.PostsFetched() {
-                    @Override
-                    public void onPostsFetched(ArrayList<Post> list) {
-
-                        for (Post post : list) {
-                            Log.d("TAG", "onPostsFetched: " + post.body);
-                        }
-
-                    }
-                });*/
-
-
-                /*
-
-                fireBaseHelper.writeReply("-KSrJppgXZiTZeV2oJzQ",Constants.getImei(TimelineActivity.this),"DARSHAN N","this is to test the reply");
-                fireBaseHelper.writeReply("-KSrJppgXZiTZeV2oJzQ",Constants.getImei(TimelineActivity.this),"DARSHAN 123","this is to test the reply again");
-                fireBaseHelper.writeReply("-KSrJppgXZiTZeV2oJzQ",Constants.getImei(TimelineActivity.this),"DARSHAN ","this is to test the reply again and again");
-
-                */
-
-
-                /*fireBaseHelper.fetchComments("-KSyq654Q_ZfEGtIGqKX", new FireBaseHelper.RepliesFetched() {
-                    @Override
-                    public void onRepliesFetched(ArrayList<Reply> list) {
-                        for (Reply reply : list) {
-                            Log.d("TAG", "onRepliesFetched: " + reply.replyValue);
-                        }
-                    }
-                });*/
-
-
-//                fireBaseHelper.likeOrUnlikePost("-KSyq8Aoz8w5oeVE3t09", Constants.getImei(TimelineActivity.this));
-
-
             }
         });
 
@@ -109,6 +61,13 @@ public class TimelineActivity extends AppCompatActivity {
 
         customAdapter = new CustomAdapter();
         recyclerView.setAdapter(customAdapter);
+
+        fireBaseHelper.fetchPosts(new FireBaseHelper.PostsFetched() {
+            @Override
+            public void onPostsFetched(ArrayList<Post> list) {
+                postArrayList.addAll(list);
+            }
+        });
 
     }
 
@@ -144,6 +103,14 @@ public class TimelineActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(Holder holder, final int position) {
 
+            Post post = postArrayList.get(position);
+
+            holder.nameTv.setText(post.author);
+            holder.contentTv.setText(post.body);
+            holder.timestampTv.setText(post.time);
+            holder.likesTv.setText(post.starCount + "");
+            holder.repliesTv.setText(post.replyCount);
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -156,7 +123,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 10;
+            return postArrayList.size();
         }
 
         class Holder extends RecyclerView.ViewHolder {
