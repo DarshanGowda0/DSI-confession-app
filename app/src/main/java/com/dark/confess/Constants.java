@@ -51,6 +51,7 @@ public class Constants {
         long hours = TimeUnit.MILLISECONDS.toHours(duration);
         long days = TimeUnit.MILLISECONDS.toDays(duration);
 
+        // change the messages as per requirement
         if (seconds < 60)
             return seconds + " Seconds ago";
         else {
@@ -78,5 +79,3 @@ public class Constants {
 
 
 // TODO: add hashTags parsing functions and pass it to writePost function
-
-// TODO: add a function to calculate the time difference before showing in the rec view
