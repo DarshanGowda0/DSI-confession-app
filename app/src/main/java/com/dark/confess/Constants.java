@@ -8,7 +8,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by darshan on 29/09/16.
@@ -79,15 +82,14 @@ public class Constants {
     }
 
 
-    public static ArrayList<String> getHashTags(String content) {
-
-        ArrayList<String> hastTagArrayList = new ArrayList<>();
-
-        // TODO: 04/10/16 => take out all the strings starting with "#" and ending with a " "(space) and add it to the list
-
-
-        return hastTagArrayList;
-
+    public static List<String> getHashTags(String str) {
+        Pattern MY_PATTERN = Pattern.compile("#(\\S+)");
+        Matcher mat = MY_PATTERN.matcher(str);
+        List<String> strs = new ArrayList<>();
+        while (mat.find()) {
+            strs.add(mat.group(1));
+        }
+        return strs;
     }
 
 }
