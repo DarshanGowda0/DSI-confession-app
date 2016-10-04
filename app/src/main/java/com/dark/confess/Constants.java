@@ -3,16 +3,12 @@ package com.dark.confess;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
-import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by darshan on 29/09/16.
@@ -20,10 +16,13 @@ import java.util.regex.Pattern;
 
 public class Constants {
 
-    public static final String USERS_TABLE = "users";
+    public static final String PACKAGE_NAME = "com.dark.confess";
+    public static final String USERS = "users";
     public static final String POSTS = "posts";
     public static final String USER_POSTS = "user-posts";
     public static final String REPLIES = "post-replies";
+    public static final String USER_NAME = PACKAGE_NAME+"/";
+
     public static final int permissionCode = 125;
 
 
@@ -79,14 +78,18 @@ public class Constants {
 
     }
 
-    public static List<String> getHashTags(String str) {
-        Pattern MY_PATTERN = Pattern.compile("#(\\S+)");
-        Matcher mat = MY_PATTERN.matcher(str);
-        List<String> strs = new ArrayList<String>();
-        while (mat.find()) {
-            strs.add(mat.group(1));
-        }
-        return strs;
+
+    public static ArrayList<String> getHashTags(String content) {
+
+        ArrayList<String> hastTagArrayList = new ArrayList<>();
+
+        // TODO: 04/10/16 => take out all the strings starting with "#" and ending with a " "(space) and add it to the list
+
+
+        return hastTagArrayList;
+
     }
 
 }
+
+
