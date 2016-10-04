@@ -32,6 +32,8 @@ public class FireBaseHelper {
 
     public void writeNewPost(String userId, String username, String body) {
 
+        ArrayList<String> hashTagsList = Constants.getHashTags(body);
+
         String key = databaseReference.child(Constants.POSTS).push().getKey();
 
         Post post = new Post(userId, username, body, Constants.getCurrentTime());
@@ -43,7 +45,10 @@ public class FireBaseHelper {
 
         databaseReference.updateChildren(childUpdates);
 
+        addIdToHashTags(hashTagsList, key);
+
     }
+
 
     //comment is reply
     public void writeReply(String postId, String uid, String name, String replyValue) {
@@ -181,6 +186,18 @@ public class FireBaseHelper {
         return postArrayList;
     }
 
+    public ArrayList<Post> searchPostsWithHashTag(String hashTag) {
+
+        ArrayList<Post> postArrayList = new ArrayList<>();
+
+
+        // TODO: 04/10/16 get all the posts with that hashTag and add it to the list
+
+        return postArrayList;
+
+
+    }
+
 
     public ArrayList<Reply> fetchComments(String postID, final RepliesFetched repliesFetched) {
 
@@ -206,6 +223,29 @@ public class FireBaseHelper {
         });
 
         return replyArrayList;
+
+    }
+
+    public boolean reportPost(String postId) {
+
+        // TODO: 04/10/16 => function to set the report boolean in 'Constants.POSTS' to true in fireBase
+
+
+        return true;
+    }
+
+    public boolean setUserName(String name, String uid) {
+
+        // TODO: 04/10/16 => set/change the username in 'Constants.USERS' for a particular uid(IMEI number) and store it in shared prefs
+
+        return true;
+    }
+
+
+    private void addIdToHashTags(ArrayList<String> hashTagsList, String key) {
+
+        // TODO: 04/10/16 => add the postId to all the tables with that hashTag
+
 
     }
 
