@@ -21,7 +21,8 @@ public class Constants {
     public static final String PACKAGE_NAME = "com.dark.confess";
     public static final String USERS = "users";
     public static final String POSTS = "posts";
-    public static final String REPORTED_POSTS = "reports";
+    public static final String REPORTED_POSTS = "report-posts";
+    public static final String REPORTED_REPLIES = "report-replies";
     public static final String HASH_TAGS = "hash-tags";
     public static final String REPLIES = "post-replies";
     public static final String POPULAR = "popular";

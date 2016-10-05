@@ -275,6 +275,25 @@ public class FireBaseHelper {
         return true;
     }
 
+    public boolean reportReply(String replyId, final CallBack callBack) {
+
+        databaseReference.child(Constants.REPORTED_REPLIES).child(replyId).setValue(true)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        callBack.onComplete(true);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callBack.onComplete(false);
+                    }
+                });
+
+        return true;
+    }
+
     public boolean setUserName(final String name, String uid, final CallBack callBack) {
 
         databaseReference.child(Constants.USERS).child(uid).setValue(name)
@@ -295,7 +314,7 @@ public class FireBaseHelper {
     }
 
 
-    private void addIdToHashTags(ArrayList<String> hashTagsList, String key, Map<String, Object> postValues) {
+   /* private void addIdToHashTags(ArrayList<String> hashTagsList, String key, Map<String, Object> postValues) {
 
 //        HashMap<String, Object> postIdHashMap = new HashMap<>();
 //        postIdHashMap.put(key, true);
@@ -304,7 +323,7 @@ public class FireBaseHelper {
             databaseReference.child(Constants.HASH_TAGS).child(hashTag).child(key).updateChildren(postValues);
         }
 
-    }
+    }*/
 
     public interface PostsFetched {
         void onPostsFetched(ArrayList<Post> list);
