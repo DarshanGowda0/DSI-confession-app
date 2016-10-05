@@ -24,7 +24,7 @@ public class Constants {
     public static final String REPORTED_POSTS = "reports";
     public static final String HASH_TAGS = "hash-tags";
     public static final String REPLIES = "post-replies";
-    public static final String FEATURED = "featured";
+    public static final String POPULAR = "popular";
     public static final String USER_NAME = PACKAGE_NAME + "/" + "userName";
 
     public static final int permissionCode = 125;

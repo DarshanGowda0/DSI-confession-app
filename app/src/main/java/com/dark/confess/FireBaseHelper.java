@@ -49,9 +49,15 @@ public class FireBaseHelper {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/" + Constants.POSTS + "/" + key, postValues);
 
+
+        for (String hashTag : hashTagsList) {
+//            databaseReference.child(Constants.HASH_TAGS).child(hashTag).child(key).updateChildren(postValues);
+            childUpdates.put("/" + Constants.HASH_TAGS + "/" + hashTag + "/" + key, postValues);
+        }
+
         databaseReference.updateChildren(childUpdates);
 
-        addIdToHashTags(hashTagsList, key, postValues);
+//        addIdToHashTags(hashTagsList, key, postValues);
 
     }
 
@@ -161,7 +167,7 @@ public class FireBaseHelper {
         final ArrayList<Post> postArrayList = new ArrayList<>();
         Query dbRef;
 
-        if (type.equals(Constants.FEATURED))
+        if (type.equals(Constants.POPULAR))
             dbRef = databaseReference.child(Constants.POSTS).orderByChild("starCount");
         else
             dbRef = databaseReference.child(Constants.POSTS).orderByChild("time");
@@ -308,10 +314,8 @@ public class FireBaseHelper {
         void onRepliesFetched(ArrayList<Reply> list);
     }
 
-
     public interface CallBack {
         public void onComplete(boolean success);
-
     }
 
 

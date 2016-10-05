@@ -71,7 +71,7 @@ public class TimelineActivity extends AppCompatActivity {
             public void onPostsFetched(ArrayList<Post> list) {
                 postArrayList.addAll(list);
             }
-        }, Constants.FEATURED);
+        }, Constants.POPULAR);
 
 
     }
