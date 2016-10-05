@@ -46,7 +46,8 @@ public class TimelineActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                fireBaseHelper.writeNewPost(Constants.getImei(TimelineActivity.this),"darshan","testing the hashtag with #cse and #dsi");
+//                fireBaseHelper.writeNewPost(Constants.getImei(TimelineActivity.this), "darshan", "testing the hashtag with #cse and #dsi");
+
 
             }
         });
@@ -70,7 +71,7 @@ public class TimelineActivity extends AppCompatActivity {
             public void onPostsFetched(ArrayList<Post> list) {
                 postArrayList.addAll(list);
             }
-        });
+        }, Constants.FEATURED);
 
 
     }

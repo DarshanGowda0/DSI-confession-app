@@ -11,10 +11,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -154,11 +156,17 @@ public class FireBaseHelper {
 
     //fetch posts,fetch comments
 
-    public ArrayList<Post> fetchPosts(final PostsFetched postsFetched) {
+    public ArrayList<Post> fetchPosts(final PostsFetched postsFetched, String type) {
 
         final ArrayList<Post> postArrayList = new ArrayList<>();
+        Query dbRef;
 
-        databaseReference.child(Constants.POSTS).addListenerForSingleValueEvent(new ValueEventListener() {
+        if (type.equals(Constants.FEATURED))
+            dbRef = databaseReference.child(Constants.POSTS).orderByChild("starCount");
+        else
+            dbRef = databaseReference.child(Constants.POSTS).orderByChild("time");
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -166,11 +174,12 @@ public class FireBaseHelper {
 
                     Log.d(TAG, "onDataChange: " + postSnapShot);
                     Post post = postSnapShot.getValue(Post.class);
-
-
                     postArrayList.add(post);
 
                 }
+
+                //reverse the arrayList
+                Collections.reverse(postArrayList);
 
                 //callback to notify that the data is fetched
                 postsFetched.onPostsFetched(postArrayList);
