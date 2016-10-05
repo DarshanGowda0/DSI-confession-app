@@ -187,13 +187,28 @@ public class FireBaseHelper {
         return postArrayList;
     }
 
-    public ArrayList<Post> searchPostsWithHashTag(String hashTag) {
+    public void searchPostsWithHashTag(String hashTag, final PostsFetched postsFetched) {
+        final ArrayList<Post> postArrayList = new ArrayList<>();
 
-        ArrayList<Post> postArrayList = new ArrayList<>();
+        databaseReference.child(Constants.HASH_TAGS).child(hashTag).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        // TODO: 04/10/16 get all the posts with that hashTag and add it to the list
+                for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "onDataChange: " + postSnapShot);
+                    Post post = postSnapShot.getValue(Post.class);
+                    postArrayList.add(post);
+                }
+                //callback to notify that the data is fetched
+                postsFetched.onPostsFetched(postArrayList);
 
-        return postArrayList;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
     }
