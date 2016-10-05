@@ -1,5 +1,7 @@
 package com.dark.confess;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -25,9 +27,12 @@ import static android.content.ContentValues.TAG;
 public class FireBaseHelper {
 
     private DatabaseReference databaseReference;
+    Context context;
 
-    public FireBaseHelper(DatabaseReference databaseReference) {
+
+    public FireBaseHelper(DatabaseReference databaseReference, Context context) {
         this.databaseReference = databaseReference;
+        this.context = context;
     }
 
     public void writeNewPost(String userId, String username, String body) {
@@ -41,11 +46,10 @@ public class FireBaseHelper {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/" + Constants.POSTS + "/" + key, postValues);
-        childUpdates.put("/" + Constants.USER_POSTS + "/" + userId + "/" + key, postValues);
 
         databaseReference.updateChildren(childUpdates);
 
-        addIdToHashTags(hashTagsList, key);
+        addIdToHashTags(hashTagsList, key, postValues);
 
     }
 
@@ -65,22 +69,20 @@ public class FireBaseHelper {
 
     }
 
-    public void deletePost(String postId, String uid, final DeleteCallBack deletePostCallBack) {
+    public void deletePost(String postId, String uid, final CallBack deletePostCallBack) {
 
         databaseReference.child(Constants.POSTS).child(postId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                deletePostCallBack.onDeleted(true);
+                deletePostCallBack.onComplete(true);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                deletePostCallBack.onDeleted(false);
+                deletePostCallBack.onComplete(false);
             }
         });
 
-        //no call back for this
-        databaseReference.child(Constants.USER_POSTS).child(uid).child(postId).removeValue();
 
     }
 
@@ -88,22 +90,21 @@ public class FireBaseHelper {
     public void deletePost(String postId, String uid) {
 
         databaseReference.child(Constants.POSTS).child(postId).removeValue();
-        databaseReference.child(Constants.USER_POSTS).child(uid).child(postId).removeValue();
 
     }
 
 
-    public void deleteReply(String postId, String replyId, String uid, final DeleteCallBack deleteCallBack) {
+    public void deleteReply(String postId, String replyId, String uid, final CallBack deleteCallBack) {
 
         databaseReference.child(Constants.REPLIES).child(postId).child(replyId).removeValue().addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                deleteCallBack.onDeleted(false);
+                deleteCallBack.onComplete(false);
             }
         }).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                deleteCallBack.onDeleted(true);
+                deleteCallBack.onComplete(true);
             }
         });
     }
@@ -190,7 +191,6 @@ public class FireBaseHelper {
 
         ArrayList<Post> postArrayList = new ArrayList<>();
 
-
         // TODO: 04/10/16 get all the posts with that hashTag and add it to the list
 
         return postArrayList;
@@ -226,26 +226,53 @@ public class FireBaseHelper {
 
     }
 
-    public boolean reportPost(String postId) {
+    public boolean reportPost(String postId, final CallBack callBack) {
 
-        // TODO: 04/10/16 => function to set the report boolean in 'Constants.POSTS' to true in fireBase
-
+        databaseReference.child(Constants.REPORTED_POSTS).child(postId).setValue(true)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        callBack.onComplete(true);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callBack.onComplete(false);
+                    }
+                });
 
         return true;
     }
 
-    public boolean setUserName(String name, String uid) {
+    public boolean setUserName(final String name, String uid, final CallBack callBack) {
 
-        // TODO: 04/10/16 => set/change the username in 'Constants.USERS' for a particular uid(IMEI number) and store it in shared prefs
-
+        databaseReference.child(Constants.USERS).child(uid).setValue(name)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        callBack.onComplete(true);
+                        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(Constants.USER_NAME, name).apply();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callBack.onComplete(false);
+                    }
+                });
         return true;
     }
 
 
-    private void addIdToHashTags(ArrayList<String> hashTagsList, String key) {
+    private void addIdToHashTags(ArrayList<String> hashTagsList, String key, Map<String, Object> postValues) {
 
-        // TODO: 04/10/16 => add the postId to all the tables with that hashTag
+//        HashMap<String, Object> postIdHashMap = new HashMap<>();
+//        postIdHashMap.put(key, true);
 
+        for (String hashTag : hashTagsList) {
+            databaseReference.child(Constants.HASH_TAGS).child(hashTag).child(key).updateChildren(postValues);
+        }
 
     }
 
@@ -257,8 +284,10 @@ public class FireBaseHelper {
         void onRepliesFetched(ArrayList<Reply> list);
     }
 
-    public interface DeleteCallBack {
-        void onDeleted(boolean var);
+
+    public interface CallBack {
+        public void onComplete(boolean success);
+
     }
 
 

@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,9 +21,10 @@ public class Constants {
     public static final String PACKAGE_NAME = "com.dark.confess";
     public static final String USERS = "users";
     public static final String POSTS = "posts";
-    public static final String USER_POSTS = "user-posts";
+    public static final String REPORTED_POSTS = "reports";
+    public static final String HASH_TAGS = "hash-tags";
     public static final String REPLIES = "post-replies";
-    public static final String USER_NAME = PACKAGE_NAME+"/";
+    public static final String USER_NAME = PACKAGE_NAME + "/" + "userName";
 
     public static final int permissionCode = 125;
 
@@ -82,16 +82,17 @@ public class Constants {
     }
 
 
-    public static List<String> getHashTags(String str) {
+    public static ArrayList<String> getHashTags(String body) {
         Pattern MY_PATTERN = Pattern.compile("#(\\S+)");
-        Matcher mat = MY_PATTERN.matcher(str);
-        List<String> strs = new ArrayList<>();
+        Matcher mat = MY_PATTERN.matcher(body);
+        ArrayList<String> hashTagsList = new ArrayList<>();
         while (mat.find()) {
-            strs.add(mat.group(1));
+            hashTagsList.add(mat.group(1));
         }
-        return strs;
+        return hashTagsList;
     }
 
 }
 
+// TODO: 04/10/16 (during implementation of delete) check if the uid is same as the current uid, if yes then delete
 

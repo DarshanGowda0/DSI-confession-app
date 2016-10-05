@@ -37,7 +37,7 @@ public class TimelineActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        fireBaseHelper = new FireBaseHelper(databaseReference);
+        fireBaseHelper = new FireBaseHelper(databaseReference, TimelineActivity.this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +45,9 @@ public class TimelineActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                fireBaseHelper.writeNewPost(Constants.getImei(TimelineActivity.this),"darshan","testing the hashtag with #cse and #dsi");
+
             }
         });
 
@@ -68,6 +71,7 @@ public class TimelineActivity extends AppCompatActivity {
                 postArrayList.addAll(list);
             }
         });
+
 
     }
 
