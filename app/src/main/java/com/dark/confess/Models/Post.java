@@ -1,4 +1,4 @@
-package com.dark.confess;
+package com.dark.confess.Models;
 
 import com.google.firebase.database.Exclude;
 
@@ -11,13 +11,13 @@ import java.util.Map;
 
 public class Post {
 
-    String uid;
-    String time;
-    String author;
-    String body;
-    int starCount = 0;
-    int replyCount = 0;
-    Map<String, Boolean> stars = new HashMap<>();
+    private String uid;
+    private String time;
+    private String author;
+    private String body;
+    private int starCount = 0;
+    private int replyCount = 0;
+    private Map<String, Boolean> stars = new HashMap<>();
 
     public Post() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
@@ -69,5 +69,33 @@ public class Post {
 
     public int getReplyCount() {
         return replyCount;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setStarCount(int starCount) {
+        this.starCount = starCount;
+    }
+
+    public void setReplyCount(int replyCount) {
+        this.replyCount = replyCount;
+    }
+
+    public void setStars(Map<String, Boolean> stars) {
+        this.stars = stars;
     }
 }

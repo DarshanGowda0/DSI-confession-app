@@ -1,10 +1,13 @@
-package com.dark.confess;
+package com.dark.confess.Helpers;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.dark.confess.Models.Post;
+import com.dark.confess.Models.Reply;
+import com.dark.confess.Utilities.Constants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -134,14 +137,14 @@ public class FireBaseHelper {
                     return Transaction.success(mutableData);
                 }
 
-                if (post.stars.containsKey(uid)) {
+                if (post.getStars().containsKey(uid)) {
                     // Unstar the post and remove self from stars
-                    post.starCount = post.starCount - 1;
-                    post.stars.remove(uid);
+                    post.setStarCount(post.getStarCount() - 1);
+                    post.getStars().remove(uid);
                 } else {
                     // Star the post and add self to stars
-                    post.starCount = post.starCount + 1;
-                    post.stars.put(uid, true);
+                    post.setStarCount(post.getStarCount() + 1);
+                    post.getStars().put(uid, true);
                 }
 
                 // Set value and report transaction success

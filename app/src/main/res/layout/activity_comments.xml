@@ -4,7 +4,7 @@
     android:id="@+id/activity_comments"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dark.confess.CommentsActivity">
+    tools:context="com.dark.confess.Activities.CommentsActivity">
 
     <include
         android:id="@+id/confessionView"

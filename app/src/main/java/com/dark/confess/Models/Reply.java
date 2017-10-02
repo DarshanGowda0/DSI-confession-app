@@ -1,4 +1,4 @@
-package com.dark.confess;
+package com.dark.confess.Models;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,10 +10,27 @@ import java.util.Map;
 public class Reply {
 
 
-    String name;
-    String uid;
-    String replyValue;
-    String timeStamp;
+    private String name;
+    private String uid;
+    private String replyValue;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public void setReplyValue(String replyValue) {
+        this.replyValue = replyValue;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    private String timeStamp;
 
     public Reply() {
     }

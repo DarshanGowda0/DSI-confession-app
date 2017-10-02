@@ -1,4 +1,4 @@
-package com.dark.confess;
+package com.dark.confess.Utilities;
 
 import android.content.Context;
 import android.telephony.TelephonyManager;

@@ -1,4 +1,4 @@
-package com.dark.confess;
+package com.dark.confess.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dark.confess.Utilities.Constants;
+import com.dark.confess.Helpers.FireBaseHelper;
+import com.dark.confess.Models.Post;
+import com.dark.confess.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -46,7 +50,7 @@ public class TimelineActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-//                fireBaseHelper.writeNewPost(Constants.getImei(TimelineActivity.this), "darshan", "testing the hashtag with #cse and #dsi");
+                fireBaseHelper.writeNewPost(Constants.getImei(TimelineActivity.this), "darshan", "testing the hashtag with #cse and #dsi");
 
 
             }
@@ -110,11 +114,11 @@ public class TimelineActivity extends AppCompatActivity {
 
             Post post = postArrayList.get(position);
 
-            holder.nameTv.setText(post.author);
-            holder.contentTv.setText(post.body);
-            holder.timestampTv.setText(post.time);
-            holder.likesTv.setText(post.starCount + "");
-            holder.repliesTv.setText(post.replyCount);
+            holder.nameTv.setText(post.getAuthor());
+            holder.contentTv.setText(post.getBody());
+            holder.timestampTv.setText(post.getTime());
+            holder.likesTv.setText(post.getStarCount() + "");
+            holder.repliesTv.setText(post.getReplyCount());
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
